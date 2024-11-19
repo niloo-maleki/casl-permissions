@@ -1,3 +1,5 @@
+import { RadioButtonData } from "../shared/DropDown"
+
 export const customerStatus = [
     {
         label: 'همه کاربران',
@@ -13,11 +15,12 @@ export const customerStatus = [
     },
 ]
 
-export const serviceType = [
+export const serviceType: RadioButtonData[] = [
     {
         label: 'همه سرویس ها',
         value: 'checkbox-all-service'
-    }, {
+    },
+    {
         label: 'ADSL',
         value: 'checkbox-ADSL-services'
     },
@@ -28,7 +31,8 @@ export const serviceType = [
     {
         label: 'DataCenter',
         value: 'checkbox-dataCenter-services',
-        permission: 3
+        permission: { page: 'Public', key: 'checkboxDataCenter' }
+
     },
 ]
 
@@ -36,7 +40,8 @@ export const city = [
     {
         label: 'همه شهرها',
         value: 'checkbox-tehran'
-    }, {
+    },
+    {
         label: 'مشهد',
         value: 'checkbox-mashhad'
     },
@@ -49,3 +54,6 @@ export const city = [
         value: 'checkbox-esfehan'
     },
 ]
+
+
+ 

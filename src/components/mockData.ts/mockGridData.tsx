@@ -4,13 +4,82 @@ import ActionButton from '@src/features/customer/component/ActionButton';
 
 export const columnsPermissionData = [
     {
-        field: 'id',
-        headerName: 'ID دسترسی',
+        field: 'name',
+        headerName: 'نام دسترسی',
         headerClassName: '',
     },
     {
+        field: 'page',
+        headerName: 'صفحه',
+        headerClassName: '',
+    },
+    {
+        field: 'description',
+        headerName: 'توضیح دسترسی',
+        headerClassName: '',
+    },
+];
+
+export const columnsRolesData = [
+    {
+        field: 'select',
+        headerName: 'نام نقش',
+        headerClassName: '',
+    },
+    {
+        field: 'action',
+        headerName: 'مشاهده دسترسی های موجود ',
+        headerClassName: '',
+    }, 
+    {
+        field: 'roleUsers',
+        headerName: 'مشاهده کاربران دارای این نقش ',
+        headerClassName: '',
+    }, 
+    
+];
+
+export const columnsRoleUsersData = [
+    {
+        field: 'select',
+        headerName: 'نام کاربر',
+        headerClassName: '',
+    },
+];
+
+export const columnsResource = [
+    {
         field: 'name',
+        headerName: 'نام دسترسی',
+        headerClassName: '',
+    },
+    {
+        field: 'description',
+        headerName: 'توضیح دسترسی',
+        headerClassName: '',
+    },
+    {
+        field: 'select',
+        headerName: '',
+        headerClassName: '',
+    },
+
+];
+
+export const columnsTranslationData = [
+    {
+        field: 'key',
         headerName: 'کلید ترجمه',
+        headerClassName: '',
+    },
+    {
+        field: 'faTranslate',
+        headerName: 'ترجمه فارسی',
+        headerClassName: '',
+    },
+    {
+        field: 'action',
+        headerName: 'عملیات',
         headerClassName: '',
     },
 ];
