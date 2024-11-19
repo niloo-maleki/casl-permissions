@@ -31,7 +31,7 @@ const PermissionWrapper = (props: PermissionWrapperProps) => {
     return <>{children}</>;
   }
 
-  if (!ability || !actionsByItem[id]) {
+  if (!ability || !id || !actionsByItem[id]) {
     if (noAccessMessage) {
       return <div>{noAccessMessage}</div>;
     }

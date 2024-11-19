@@ -4,10 +4,13 @@ import { cn, Paragraph } from '@shatel/ui-kit';
 import { AuthContext } from '@src/context/AuthContext';
 import { Fragment, useContext } from 'react';
 import PermissionWrapper from '@src/components/shared/PermissionWrapper';
+import { getPermissionKey } from '@src/helper/helper';
+import { usePermissions } from '@src/hooks/usePermissions';
 
 const Menu = () => {
     const navigate = useNavigate();
     const { setRole, setPermissions } = useContext(AuthContext);
+    const { Resources } = usePermissions()
 
     const handleLogout = () => {
         setRole("");
@@ -21,7 +24,7 @@ const Menu = () => {
         }
         navigate(path)
     })
-    
+
     const renderButtonMeno = (({ icon: Icon, path, title }: MenuItem) => {
         const isActive = location.pathname === path;
 
@@ -42,16 +45,17 @@ const Menu = () => {
         <menu className='flex flex-col p-small w-52 gap-xsmall bg-cta-focus-primary border-l-1 border-primary'>
             {navigationItems.map((data: MenuItem) => {
                 const { title, permission } = data
+                
                 return (
                     <Fragment key={title}>
                         {permission ?
                             <PermissionWrapper
-                                permissionId={permission}
+                                permissionKey={getPermissionKey(Resources,permission)}
                             >
                                 {renderButtonMeno(data)}
                             </PermissionWrapper> :
                             <>
-                            { renderButtonMeno(data) }
+                                {renderButtonMeno(data)}
                             </>
                         }
                     </Fragment>
