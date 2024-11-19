@@ -1,0 +1,46 @@
+{
+  "dashboard": {
+    "title": "داشبورد",
+    "subscriberReadyInstall": "مشترک آماده نصب",
+    "welcome": "{{role}} به پنل CRM خوش آمدید"
+  },
+  "customer": {
+    "my-customer": "مشترکین من",
+    "special-customer": "مشترکین ویژه",
+    "city": "شهر",
+    "company": "شرکت",
+    "centerType": "نوع مرکز",
+    "serviceCenter": "مرکز ارایه سرویس",
+    "serviceType": "نوع سرویس",
+    "searchCode": "کد اشتراک شناسه",
+    "status": "وضعیت مشترک",
+    "search": "جستجو",
+    "advancedSearch": "جستجوی پیشرفته",
+    "registerCall": "ثبت تماس",
+    "editChanges": "تغییرات"
+  },
+  "manager": {
+    "management":"مدیریت",
+    "select-role": "انتخاب نقش",
+    "select-user": "انتخاب کاربر",
+    "search-page": "جستجو صفحه",
+    "Search-by-access-name": "جستجو بر اساس نام دسترسی",
+    "save": "ذخیره",
+    "access-management-page":"دسترسی به صفحه مدیریت",
+    "page-accessible" : "آیا دسترسی صفحه جدید است؟",
+    "role-accessible" : "آیا دسترسی نقش جدید است؟"
+  },
+  "translations": {
+    "title": "ترجمه ها",
+    "add_new": "ترجمه جدید",
+    "edit_title": "ویرایش ترجمه",
+    "key": "کلید",
+    "save": "ذخیره",
+    "add_title": "افزودن ترجمه",
+    "key_label": "کلید ترجمه",
+    "value_label": "مقدار ترجمه"
+  },
+  "users-list": "فهرست مشترکین",
+  "username": "نام کاربری",
+  "password": "رمز عبور"
+}
