@@ -1,18 +1,19 @@
-import {  defineAbility } from '@casl/ability';
-
+import { defineAbility } from '@casl/ability';
+import { PermissionResource } from '@src/api/interface';
 import { AuthContext } from '@src/context/AuthContext';
 import React, { useContext } from 'react';
 
+
 interface PermissionWrapperProps {
-  permissionId:number;
   noAccessMessage?: string;
   children: React.ReactNode;
+  permissionKey: PermissionResource;
 }
 
 const PermissionWrapper = (props: PermissionWrapperProps) => {
-  const { permissionId, noAccessMessage, children } = props;
+  const { noAccessMessage, children, permissionKey } = props;
   const { permissions, actionsByItem } = useContext(AuthContext);
-
+  const {id} = permissionKey;
 
   const ability = defineAbility((can) => {
     if (!permissions) return;
@@ -26,18 +27,18 @@ const PermissionWrapper = (props: PermissionWrapperProps) => {
 
   /* I should have sent the View, but it is correct to send the manage */
   const isAdmin = ability.can('View', '1');
-  if (isAdmin ) {
+  if (isAdmin) {
     return <>{children}</>;
   }
 
-  if (!ability || !actionsByItem[permissionId]) {
+  if (!ability || !actionsByItem[id]) {
     if (noAccessMessage) {
       return <div>{noAccessMessage}</div>;
     }
     return
   }
 
-  const hasPermission = actionsByItem[permissionId].some(act => ability.can(act, permissionId.toString()));
+  const hasPermission = actionsByItem[id].some(act => ability.can(act, id.toString()));
 
   return (
     <>
