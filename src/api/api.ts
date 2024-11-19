@@ -1,74 +1,169 @@
-import { ResolvedApi, PermissionResolve, AllResourceResolve } from "./interface";
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
+import { IGetRole, IModifyRoleResources, IModifyRoleUsers, IModifyUserRoles, IResourceAccess, IUser, IUserAccess, PermissionGroups, PermissionResolve, PermissionResource, ResolvedApi } from "./interface";
 
-const baseUrl = 'https://localhost:44310/api'
+const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-export const getPermission = async (username: string): Promise<ResolvedApi<PermissionResolve>> => {
+const handleApiRequest = async <T>(config: AxiosRequestConfig): Promise<ResolvedApi<T>> => {
   try {
-    const response = await fetch(`${baseUrl}/Permission/User/${username}`);
+    const response: AxiosResponse<ResolvedApi<T>> = await apiClient(config);
+    const { message, statusCode, data } = response.data;
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const result: ResolvedApi<PermissionResolve> = await response.json();
-    const { message, statusCode, data } = result
-
-    if (data) {
-      return { message, statusCode, data: data };
-    } else {
-      return { message, statusCode };
-    }
+    return { message, statusCode, ...(data && { data }) };
 
   } catch (error) {
-    console.error(error);
-    return { message: "نام کاربری یا رمز عبور اشتباه است", statusCode: 401 };
-
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError<ResolvedApi<T>>;
+      if (axiosError.response) {
+        const { message, statusCode } = axiosError.response.data;
+        return { message, statusCode };
+      }
+    }
+    console.error("مشکلی در درخواست رخ داده است", error);
+    return { message: "مشکلی در درخواست رخ داده است", statusCode: 500 };
   }
 };
 
-export const getAllResource = async (): Promise<ResolvedApi<AllResourceResolve[]>> => {
-  try {
-    const response = await fetch(`${baseUrl}/Resource/All`);
+export const getPermission = (username: string): Promise<ResolvedApi<PermissionResolve>> => {
+  return handleApiRequest<PermissionResolve>({
+    url: `/Permission/User/${username}`,
+    method: 'get',
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const result: ResolvedApi<AllResourceResolve[]> = await response.json();
-    const { message, statusCode, data } = result
+  });
+};
 
-    if (data) {
-      return { message, statusCode, data: data };
-    } else {
-      return { message, statusCode };
-    }
+export const getRoleResources = (rolename: string): Promise<ResolvedApi<IResourceAccess[]>> => {
+  return handleApiRequest<IResourceAccess[]>({
+    url: `/Permission/RoleResources/${rolename }`,
+    method: 'get',
+  });
+};
 
-  } catch (error) {
-    console.error(error);
-    return { message: "نام کاربری یا رمز عبور اشتباه است", statusCode: 401 };
+export const postResource = async (data: PermissionResource): Promise<ResolvedApi<null>> => {
+  const response = await handleApiRequest<null>({
+    url: `/Resource`,
+    method: 'post',
+    data
+  });
 
+  return response;
+};
+
+export const postRole = async (data: IGetRole): Promise<ResolvedApi<null>> => {
+  const response = await handleApiRequest<null>({
+    url: `/Role`,
+    method: 'post',
+    data
+  });
+
+  return response;
+};
+
+export const postModifyUserRoles = async (data: IModifyUserRoles): Promise<ResolvedApi<null>> => {
+  const response = await handleApiRequest<null>({
+    url: `/Permission/ModifyUserRoles`,
+    method: 'post',
+    data
+  });
+
+  return response;
+};
+
+export const postModifyRoleResources = async (data: IModifyRoleResources): Promise<ResolvedApi<null>> => {
+  const response = await handleApiRequest<null>({
+    url: `/Permission/ModifyRoleResources`,
+    method: 'post',
+    data
+  });
+
+  return response;
+};
+
+export const postModifyRoleUsers = async (data: IModifyRoleUsers): Promise<ResolvedApi<null>> => {
+  const response = await handleApiRequest<null>({
+    url: `/Permission/ModifyRoleUsers`,
+    method: 'post',
+    data
+  });
+
+  return response;
+};
+
+export const getRoleUsers = async (rolename: string): Promise<ResolvedApi<IUserAccess[]>> => {
+  const response = await handleApiRequest<IUserAccess[]>({
+    url: `/Permission/RoleUsers/${rolename}`,
+    method: 'get',
+  });
+  return response;
+
+}
+export const getAllResource = async (): Promise<ResolvedApi<PermissionGroups>> => {
+  const response = await handleApiRequest<PermissionGroups>({
+    url: `/Resource/All`,
+    method: 'get',
+  });
+
+
+  if (!response || !response.data) {
+    throw new Error('Data not found in the response');
   }
+
+  return response;
 };
 
 
-// export async function getAccessControlByRole(role: string): Promise<Permission[] | null> {
-//   try {
-//     const response = await fetch("mock/mockData.json");
-//     if (!response.ok) {
-//       throw new Error("خطا در بارگذاری فایل JSON");
-//     }
+export const getAllRoles = async (): Promise<ResolvedApi<IGetRole[]>> => {
+  const response = await handleApiRequest<IGetRole[]>({
+    url: `/Role/All`,
+    method: 'get',
+  });
 
-//     const data: Record<string, RoleAccessControl> = await response.json();
 
-//     if (mockRoles.includes(role)) {
-//       const permissions = data[role].permissions
+  if (!response || !response.data) {
+    throw new Error('Data not found in the response');
+  }
 
-//       return permissions;
-//     } else {
-//       console.error("نقش وارد شده معتبر نیست");
+  return response;
+};
 
-//       return null;
-//     }
-//   } catch (error) {
-//     console.error("خطا در بارگذاری داده‌های JSON:", error);
-//     return null;
-//   }
-// }
+
+  export const getAllUsers = async (): Promise<ResolvedApi<IUser[]>> => {
+  const response = await handleApiRequest<IUser[]>({
+    url: `/User/All`,
+    method: 'get',
+  });
+
+
+  if (!response || !response.data) {
+    throw new Error('Data not found in the response');
+  }
+
+  return response;
+};
+
+// Function to update the JSON file
+export const updateJson = async (): Promise<ResolvedApi<null>> => {
+  try {
+    const response: AxiosResponse<ResolvedApi<null>> = await apiClient.get("http://localhost:4000/update-json");
+    if (response.status !== 200) {
+      throw new Error("Failed to update JSON.");
+    }
+    console.log("✔️ فایل JSON با موفقیت به‌روزرسانی شد از طریق سرور دولوپ");
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError<ResolvedApi<null>>;
+      if (axiosError.response) {
+        const { message, statusCode } = axiosError.response.data;
+        console.error("❌ خطا در به‌روزرسانی فایل JSON:", message);
+        return { message, statusCode };
+      }
+    }
+    console.error("❌ خطا در به‌روزرسانی فایل JSON:", error);
+    return { message: "مشکلی در به‌روزرسانی فایل JSON رخ داده است", statusCode: 500 };
+  }
+};
