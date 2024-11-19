@@ -1,93 +1,126 @@
-import { cn, Paragraph, IconExpandDownLight, TextField, RadioButton } from "@shatel/ui-kit"
+import { cn, Paragraph, IconExpandDownLight, TextField, RadioButton } from "@shatel/ui-kit";
 import { useClickOutside } from "@src/hooks/useClickOutSide";
-import { useState } from "react"
+import { ChangeEventHandler, useState } from "react";
 import PermissionWrapper from "./PermissionWrapper";
+import { getPermissionKey } from "@src/helper/helper";
+import { PagePermissionKey, PermissionKey } from "@src/api/interface";
+import { usePermissions } from "@src/hooks/usePermissions";
 
-
-
-interface RadioButtonData {
+export interface RadioButtonData {
     label: string;
     value: string;
-    permission?: number;
+    permission?: {
+        page: PagePermissionKey;
+        key: PermissionKey;
+    };
 }
-interface DropDownProps {
+export interface DropDownProps {
     radioButtonData: RadioButtonData[];
-    deafaultLabel: string;
-    deafaultChecked?: string;
+    defaultLabel?: string;
     searchBox?: boolean;
     className?: string;
+    onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+    checked?: boolean;
+    data?: string;
+    disabled?: boolean;
 }
 
 const DropDown = (props: DropDownProps) => {
-    const { radioButtonData, deafaultLabel, deafaultChecked, searchBox = false, className = '' } = props
-    const [open, setOpen] = useState(false)
-    const [data, setData] = useState(deafaultChecked);
+    const { radioButtonData, defaultLabel, searchBox = false, data, className = '', onChange, disabled = false } = props;
+    const [open, setOpen] = useState(false);
+    const [search, setSearch] = useState('');
 
+    const { Resources } = usePermissions();
+
+    const label = defaultLabel ? defaultLabel : data;
     const ref = useClickOutside(() => {
-        setOpen(false)
+        setOpen(false);
     });
 
-
     const handleClick = () => {
-        setOpen(!open)
-    }
-    const renderRadioButton = (({ value, label }: RadioButtonData) => {
+        setOpen(!open);
+    };
 
-        return(
-            <RadioButton id={value} name={value} checked={data === value} value={value} onChange={e => setData(e.target.value)}
-                label={
-                    <Paragraph className="hover:text-cta-hover-primary" variant='p'>{label}</Paragraph>
-                } />
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+    };
+
+    const filteredData = search
+        ? radioButtonData.filter((item) =>
+            item.label.toLowerCase().includes(search.toLowerCase())
         )
-    })
+        : radioButtonData;
+
+    const renderRadioButton = ({ value, label }: RadioButtonData) => {
+        return (
+            <RadioButton
+                id={value}
+                name={value}
+                checked={data === value}
+                value={value}
+                onChange={onChange}
+                label={
+                    <Paragraph className="hover:text-cta-hover-primary" variant="p">
+                        {label}
+                    </Paragraph>
+                }
+            />
+        );
+    };
 
     return (
         <div ref={ref} className="flex flex-col relative">
-            <button onClick={handleClick} className={cn("h-12 bg-main-white rounded-medium px-large text-center flex justify-between items-center",
-                "focus:border-1 focus:outline-none focus:border-primary", className
-            )} type="button">
-                <Paragraph variant="p1">{deafaultLabel}</Paragraph>
-
-                <IconExpandDownLight className={cn("fill-main-white stroke-main-primary stroke-2")} />
+            <button
+                disabled={disabled}
+                onClick={handleClick}
+                className={cn(
+                    "h-12 bg-main-white rounded-medium px-large text-center flex gap-small justify-between items-center",
+                    "focus:border-1 focus:outline-none focus:border-primary",
+                    "disabled:bg-primary",
+                    className
+                )}
+                type="button"
+            >
+                <Paragraph variant="p1">{label}</Paragraph>
+                <IconExpandDownLight
+                    className={cn("fill-main-white stroke-main-primary stroke-2", disabled && "fill-none")}
+                />
             </button>
 
-            {open && <div className={cn("z-10 absolute top-14 bg-main-white rounded-medium shadow w-full", className)}>
-                {searchBox &&
-                    <div className="p-small">
-                        <TextField
-                            label='جستجو' className='bg-main-white'
+            {open && (
+                <div className={cn("z-10 absolute top-14 bg-main-white rounded-medium shadow w-full", className)}>
+                    {searchBox && (
+                        <div className="p-small">
+                            <TextField
+                                label="جستجو"
+                                className="bg-main-white"
+                                onChange={handleSearchChange}
+                                value={search}
+                            />
+                        </div>
+                    )}
 
-                        >
-                        </TextField>
-                    </div>
-                }
-
-                <ul className="max-h-48 p-small overflow-y-auto text-sm">
-                    <li>
-                        {radioButtonData.map(({ label, value,permission }) => {
-                            return (
-
+                    <ul className="max-h-48 p-small overflow-y-auto text-sm">
+                        {filteredData.length > 0 ? (
+                            filteredData.map(({ label, value, permission }) => (
                                 <div key={value} className="flex items-center p-xsmall">
-                                    {permission ?
-                                        <PermissionWrapper
-                                            permissionId={permission}
-                                        >
+                                    {permission ? (
+                                        <PermissionWrapper permissionKey={getPermissionKey(Resources, permission)}>
                                             {renderRadioButton({ label, value })}
-                                        </PermissionWrapper> :
-                                        <>
-                                            {renderRadioButton({ label, value })}
-                                        </>
-                                    }
+                                        </PermissionWrapper>
+                                    ) : (
+                                        renderRadioButton({ label, value })
+                                    )}
                                 </div>
-
-                            )
-                        })}
-                    </li>
-                </ul>
-            </div>}
-
+                            ))
+                        ) : (
+                            <Paragraph variant="p2" className="p-xsmall text-gray-500">هیچ گزینه‌ای یافت نشد</Paragraph>
+                        )}
+                    </ul>
+                </div>
+            )}
         </div>
-    )
-}
+    );
+};
 
-export default DropDown
+export default DropDown;
