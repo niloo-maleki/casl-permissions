@@ -56,9 +56,9 @@ const Table = (props: TableProps) => {
 
                 <tbody>
                     {currentItems.map((item, rowIndex) => (
-                        <tr key={rowIndex} className={`grid grid-cols-${columns.length} gap-medium border-b-1 border-primary`}>
+                        <tr key={rowIndex} className={`grid grid-cols-${columns.length} gap-medium border-b-1 border-primary items-center`}>
                             {columns.map((col, colIndex) => (
-                                <td key={colIndex} className="p-small">
+                                <td key={colIndex} className="grid p-small">
                                     {renderCellContent(item[col.field])}
                                 </td>
                             ))}

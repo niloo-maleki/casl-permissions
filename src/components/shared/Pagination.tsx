@@ -12,7 +12,7 @@ interface PaginationProps {
 }
 
 const Pagination = (props: PaginationProps) => {
-    const { currentPage, itemsPerPage, onPageChange, totalItems, maxPageNumbers = 5, activeClassName, previousLabel, nextLabel } = props;
+    const { currentPage, itemsPerPage, onPageChange, totalItems, activeClassName, previousLabel, nextLabel } = props;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const handlePageClick = (page: number) => {
