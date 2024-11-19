@@ -1,58 +1,105 @@
-import { Title, Divider } from '@shatel/ui-kit'
+import { Title, Divider, IconAddSquareLight, Paragraph, SegmentedControl, Button } from '@shatel/ui-kit';
 import { useAccessPage } from '@src/hooks/useAccessPage';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Table from '@src/components/shared/Table';
-import { columnsPermissionData } from '@src/components/mockData.ts/mockGridData';
-import { getAllResource } from '@src/api/api';
-import { AllResourceResolve } from '@src/api/interface';
+import AddPermissionDrawer from './component/AddPermissionDrawer';
+import { usePermissions } from '@src/hooks/usePermissions';
+import { useTranslation } from 'react-i18next';
+import PermissionTable from './component/PermissionTable';
+import RolesTable from './component/RolesTable';
+import { IResourceAccess } from '@src/api/interface';
+import AccessAllocationDrawer from './component/AccessAllocationDrawer';
 
 const ManagePage = () => {
+    const { Resources } = usePermissions();
+    const accessPage = useAccessPage(Resources.Manager.pageManager);
+    const pageName = Object.keys(Resources);
+    const { t } = useTranslation();
 
-    const accessPage = useAccessPage('6')
-    const navigate = useNavigate()
-    const [response, setResponse] = useState<AllResourceResolve[]>([])
+    const navigate = useNavigate();
+    const [openAddNewKey, setOpenAddNewKey] = useState(false);
+    const [access, setAccess] = useState('permissionAccess');
+    const [openAccess, setOpenAccess] = useState(false)
+    const [selectedAccesses, setSelectedAccesses] = useState<IResourceAccess[]>([]);
 
-    const fetchResource = (async () => {
-        const { data } = await getAllResource()
-
-        if (data) {
-            setResponse(data)
-        }
-    })
-
-    useEffect(() => {
-        fetchResource()
-    }, [])
-    
     useEffect(() => {
         if (!accessPage) {
-            return (
-                navigate('/')
-            )
+            navigate('/');
         }
+    }, [navigate, accessPage]);
 
-    }, [accessPage])
+    const handleCheckboxChange = (item: IResourceAccess, isChecked: boolean) => {
+        setSelectedAccesses((prevSelected) =>
+            isChecked
+                ? [...prevSelected, item]
+                : prevSelected.filter((access) => access.resourceName !== item.resourceName)
+        );
+    };
 
-    const rowData = response.map(item => ({
-        id: item.id,
-        name: item.name
-    }));
+    const accessDrawerOpenhandler = (() => {
+        setOpenAccess(true)
+    })
 
     return (
-        <div className="flex flex-col gap-xsmall w-full">
+        <div className="flex flex-col gap-medium w-full">
             <div className="flex w-full justify-between">
-                <Title variant="h4">مدیریت</Title>
+                <Title variant="h4">{t('manager.management')}</Title>
+
+                {process.env.NODE_ENV === 'development' && (
+                    <button
+                        onClick={() => setOpenAddNewKey(true)}
+                        className="cursor-pointer flex gap-small items-center"
+                    >
+                        <Paragraph variant="p">افزودن دسترسی جدید</Paragraph>
+                        <IconAddSquareLight className="cursor-pointer fill-main-white stroke-main-brand-secondary hover:fill-marketing-orange stroke-2" />
+                    </button>
+                )}
             </div>
             <Divider />
-
-            <Title variant="h1" className="text-action-warning">
-                دسترسی به صفحه مدیریت
+            <Title variant="h2" className="text-action-warning">
+                {t('manager.access-management-page')}
             </Title>
 
-            <Table columns={columnsPermissionData} rowData={rowData} itemsPerPage={10} />
-        </div>
-    )
-}
+            <div className="flex flex-col gap-medium">
+                <SegmentedControl
+                    className="w-fit h-12"
+                    background="white"
+                    onChange={setAccess}
+                    options={[
+                        { id: 'permissionAccess', value: 'تخصیص دسترسی' },
+                        { id: 'roleAccess', value: 'تخصیص نقش' },
+                        { id: 'userAccess', value: 'حوزه دسترسی کاربر' },
+                    ]}
+                    orientation="horizontal"
+                    selected={access}
+                />
 
-export default ManagePage
+                {access === 'permissionAccess' && (
+                    <PermissionTable
+                        selectedAccesses={selectedAccesses}
+                        onCheckboxChange={handleCheckboxChange}
+                    >
+                        <Button
+                            placement="end"
+                            className="w-1/7 rounded-small"
+                            onClick={accessDrawerOpenhandler}
+                        >
+                            تخصیص دسترسی به نقش
+                        </Button>
+                        <AccessAllocationDrawer
+                            open={openAccess}
+                            setOpen={setOpenAccess}
+                            resourceAccess={selectedAccesses}
+                        />
+                    </PermissionTable>
+                )}
+                {access === 'roleAccess' && <RolesTable />}
+                {/* {access === 'userAccess' && <UserAccess />} */}
+            </div>
+
+            <AddPermissionDrawer open={openAddNewKey} setOpen={setOpenAddNewKey} pageName={pageName} />
+        </div>
+    );
+};
+
+export default ManagePage;
