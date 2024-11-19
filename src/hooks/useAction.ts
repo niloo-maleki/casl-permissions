@@ -1,6 +1,7 @@
+import { Permission } from "@src/api/interface";
+import { Actions } from "@src/context/interface";
 import { useEffect, useState } from "react";
-import { Permission } from "../api/api";
-import { Actions } from "@src/context/AuthContext";
+
 
 export function useAction(permissions: Permission[]) {
   const [actionsByItem, setActionsByItem] = useState<{ [item: string]: Actions[] }>({});
