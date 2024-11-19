@@ -1,5 +1,6 @@
 import { Drawer, Checkbox, TextField, Button, Paragraph, showToast } from '@shatel/ui-kit';
-import { postResource, updateJson } from '@src/api/api';
+import { postResource } from '@src/api/endpoints/resourcesApi';
+import { updateJson } from '@src/api/endpoints/updateJsonApi';
 import DropDown from '@src/components/shared/DropDown';
 import { capitalizeFirstLetter } from '@src/helper/helper';
 import { useQueryClient } from '@tanstack/react-query';

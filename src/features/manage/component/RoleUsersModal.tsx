@@ -1,11 +1,12 @@
 import { Button, Checkbox, Loading, Modal, Paragraph } from '@shatel/ui-kit'
-import { getAllUsers, postModifyRoleUsers } from '@src/api/api'
 import { IUser, IUserAccess } from '@src/api/interface'
 import { columnsRoleUsersData } from '@src/components/mockData.ts/mockGridData'
 import Table from '@src/components/shared/Table'
 import { useQuery } from '@tanstack/react-query'
 import { Dispatch, SetStateAction, useState } from 'react'
 import Filters from './Filters'
+import { getAllUsers } from '@src/api/endpoints/usersApi'
+import { postModifyRoleUsers } from '@src/api/endpoints/permissionsApi'
 
 interface IRoleUsersModal {
   roleName: string,

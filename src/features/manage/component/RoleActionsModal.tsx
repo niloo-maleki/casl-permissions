@@ -2,7 +2,7 @@ import { Button, Modal } from '@shatel/ui-kit'
 import PermissionTable from './PermissionTable'
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IResourceAccess } from '@src/api/interface';
-import { postModifyRoleResources } from '@src/api/api';
+import { postModifyRoleResources } from '@src/api/endpoints/permissionsApi';
 
 interface IRoleActionsModal {
     roleName: string,

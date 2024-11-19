@@ -3,12 +3,13 @@ import Filters from './Filters';
 import Table from '@src/components/shared/Table';
 import { columnsRolesData } from '@src/components/mockData.ts/mockGridData';
 import { useQuery } from '@tanstack/react-query';
-import { getAllRoles, getRoleResources, getRoleUsers } from '@src/api/api';
 import { IGetRole, IResourceAccess, IRoleAccess, IUserAccess } from '@src/api/interface';
 import { Button, Checkbox, cn, IconPipe, IconSettingLineLight, Loading, Paragraph } from '@shatel/ui-kit';
 import AssignRoleToUserDrawer from './AssignRoleToUserDrawer';
 import RoleActionsModal from './RoleActionsModal';
 import RoleUsersModal from './RoleUsersModal';
+import { getAllRoles } from '@src/api/endpoints/rolesApi';
+import { getRoleResources, getRoleUsers } from '@src/api/endpoints/permissionsApi';
 
 const RolesTable = () => {
     const { data: allRoles, isLoading } = useQuery({

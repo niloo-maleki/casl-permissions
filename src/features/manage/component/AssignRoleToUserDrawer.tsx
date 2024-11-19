@@ -1,5 +1,6 @@
 import { Button, Drawer, Loading, showToast } from '@shatel/ui-kit'
-import { getAllUsers, postModifyUserRoles } from '@src/api/api';
+import { postModifyUserRoles } from '@src/api/endpoints/permissionsApi';
+import { getAllUsers } from '@src/api/endpoints/usersApi';
 import { IRoleAccess, IUser } from '@src/api/interface';
 import DropDown from '@src/components/shared/DropDown';
 import { useQuery } from '@tanstack/react-query';

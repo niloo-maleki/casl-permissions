@@ -1,5 +1,6 @@
 import { Button, Checkbox, Drawer, Loading, Paragraph, showToast, TextField } from "@shatel/ui-kit";
-import { getAllRoles, postModifyRoleResources, postRole } from "@src/api/api";
+import { postModifyRoleResources } from "@src/api/endpoints/permissionsApi";
+import { getAllRoles, postRole } from "@src/api/endpoints/rolesApi";
 import { IGetRole, IResourceAccess } from "@src/api/interface";
 import DropDown from "@src/components/shared/DropDown";
 import { useQuery, useQueryClient } from "@tanstack/react-query";

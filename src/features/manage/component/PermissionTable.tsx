@@ -4,8 +4,8 @@ import { columnsPermissionData } from '@src/components/mockData.ts/mockGridData'
 import { IResourceAccess, PermissionResource } from '@src/api/interface';
 import { Loading, Checkbox, Paragraph } from '@shatel/ui-kit';
 import { useQuery } from '@tanstack/react-query';
-import { getAllResource } from '@src/api/api';
 import AccessFilters from './AccessFilters';
+import { getAllResource } from '@src/api/endpoints/resourcesApi';
 
 interface IPermissionTable {
     selectedAccesses: IResourceAccess[];
