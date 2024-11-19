@@ -1,0 +1,73 @@
+{
+  "Public": {
+    "all": {
+      "id": 1,
+      "name": "All",
+      "description": null,
+      "page": {
+        "id": 2,
+        "name": "Public"
+      }
+    },
+    "checkboxDataCenter": {
+      "id": 2,
+      "name": "checkbox-dataCenter",
+      "description": "دسترسی به دیتاسنتر",
+      "page": {
+        "id": 2,
+        "name": "Public"
+      }
+    }
+  },
+  "Manager": {
+    "pageManager": {
+      "id": 3,
+      "name": "page-manager",
+      "description": null,
+      "page": {
+        "id": 4,
+        "name": "Manager"
+      }
+    }
+  },
+  "Customer": {
+    "btnAdvancedSearch": {
+      "id": 4,
+      "name": "btn-advanced-search",
+      "description": null,
+      "page": {
+        "id": 1,
+        "name": "Customer"
+      }
+    },
+    "btnEdithcustomer": {
+      "id": 5,
+      "name": "btn-edithcustomer",
+      "description": null,
+      "page": {
+        "id": 1,
+        "name": "Customer"
+      }
+    },
+    "btnDeletecustomer": {
+      "id": 6,
+      "name": "btn-deletecustomer",
+      "description": null,
+      "page": {
+        "id": 1,
+        "name": "Customer"
+      }
+    }
+  },
+  "Dashboard": {
+    "chartSales": {
+      "id": 7,
+      "name": "chart-sales",
+      "description": null,
+      "page": {
+        "id": 3,
+        "name": "Dashboard"
+      }
+    }
+  }
+}
