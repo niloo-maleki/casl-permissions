@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoadingButton, Paragraph, TextField, Title } from "@shatel/ui-kit";
 import { AuthContext } from "@src/context/AuthContext";
-import { getPermission } from "@src/api/api";
+import { getPermission } from "@src/api/endpoints/permissionsApi";
 
 
 const LoginPage = () => {
