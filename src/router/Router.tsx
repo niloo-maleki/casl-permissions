@@ -4,6 +4,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import Dashboard from "@src/features/dashboard/Dashboard";
 import LoginPage from "@src/features/login/LoginPage";
 import ManagePage from "@src/features/manage/ManagePage";
+import TranslationPanel from "@src/Translation/TranslationPanel";
 
 interface RouteMenu {
   path: string;
@@ -22,6 +23,10 @@ const routeMenus: RouteMenu[] = [
   {
     path: '/manage',
     element: <ManagePage />,
+  },
+    {
+    path: '/translate',
+    element: <TranslationPanel />,
   }
 
 ]
@@ -29,7 +34,7 @@ const routeMenus: RouteMenu[] = [
 const Router = () => {
   return (
     <Routes>
-      {/* صفحه لاگین */}
+      <Route path="/" element={<LoginPage />} />
 
       <Route element={<ProtectedRoutes />}>
         {
@@ -43,8 +48,6 @@ const Router = () => {
         }
 
       </Route>
-
-      <Route path="/" element={<LoginPage />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

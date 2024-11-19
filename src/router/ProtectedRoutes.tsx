@@ -9,7 +9,7 @@ const ProtectedRoutes = () => {
 
   const token = localStorage.getItem('token')
   
-  if (!token) {
+  if (!token || !role) {
     return <Navigate to="/" replace />;
   }
 
