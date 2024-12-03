@@ -4,14 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "compile-fetch-api": "tsc src/scripts/fetchApiData.ts",
     "dev": "node src/scripts/fetchApiData.js && vite",
     "fetch-api-data": "set NODE_TLS_REJECT_UNAUTHORIZED=0 && node src/scripts/fetchApiData.js",
     "build": "tsc -b && vite build",
     "prebuild": "node src/scripts/fetchApiData.js",
     "lint": "eslint .",
     "preview": "vite preview",
-    "dev-server": "node devServer.js"
+    "dev-server": "node server/devServer.js"
   },
   "dependencies": {
     "@casl/ability": "^6.7.1",
@@ -21,6 +20,7 @@
     "@shatel/ui-kit": "^0.34.97",
     "@tanstack/react-query": "^5.56.2",
     "@tanstack/react-query-devtools": "^5.58.0",
+    "@types/express": "^5.0.0",
     "axios": "^1.7.7",
     "cors": "^2.8.5",
     "express": "^4.21.1",
@@ -40,7 +40,8 @@
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@sentry/vite-plugin": "^2.22.4",
-    "@types/node": "^22.8.4",
+    "@svgr/rollup": "^8.1.0",
+    "@types/node": "^22.10.1",
     "@types/react": "^18.3.8",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
@@ -53,7 +54,7 @@
     "tailwindcss": "^3.4.10",
     "terser": "^5.36.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.3",
+    "typescript": "^5.6.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
   }

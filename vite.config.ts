@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import url from 'url';
+import svgr from "@svgr/rollup";
 
 // Getting the current directory path
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -14,6 +15,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(), // Adding the React plugin
+      svgr(),
       sentryVitePlugin({
         org: "shatel", // Sentry organization name
         project: "casl-permissions", // Sentry project name

@@ -8,7 +8,7 @@
 
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -28,8 +28,8 @@
       "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
       "@icons/*": ["./src/assets/svg/*"]
-    }
+    },
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "declarations.d.ts"],
   "exclude": ["node_modules"]
 }
