@@ -6,6 +6,7 @@ import './assets/styles/main.css';
 import './plugins/i18n.ts';
 import { Loading, ToastContainer } from "@shatel/ui-kit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import './instruments.ts'
 
 const queryClient = new QueryClient();
 
@@ -27,7 +28,7 @@ const startApp = async () => {
             <ToastContainer
               position={'bottom-right'}
               rtl='rtl'
-            />,
+            />
           </Suspense>
         </Router>
       </QueryClientProvider>
