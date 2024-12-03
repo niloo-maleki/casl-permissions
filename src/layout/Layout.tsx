@@ -17,11 +17,11 @@ const Layout = ({ children, role }: Props) => {
         <div className='h-screen overflow-hidden flex flex-col'>
             <TopNav title={role} />
 
-            <section className='flex grow h-screen overflow-y-auto'>
+            <section className='flex grow h-[calc(100vh - 4rem)] overflow-hidden'>
 
                 <Menu />
 
-                <main className='flex p-large grow bg-secondary'>
+                <main className='flex p-large grow bg-secondary overflow-y-auto'>
                     {children}
                 </main>
             </section>
