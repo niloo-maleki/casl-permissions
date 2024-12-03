@@ -68,7 +68,6 @@ const RoleUsersModal = (props: IRoleUsersModal) => {
   );
 
   return (
-    <>
       <Modal
         className="gap-large"
         title={`دسترسی‌های نقش ${roleName}`}
@@ -95,7 +94,7 @@ const RoleUsersModal = (props: IRoleUsersModal) => {
         >
           ثبت تغییرات
         </Button>
-      </Modal></>
+      </Modal>
   )
 }
 

@@ -50,8 +50,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cta-hover-secondary">
-      <div className="flex flex-col gap-medium bg-main-white p-xlarge rounded-medium shadow-lg w-full max-w-md">
+    <div className="flex items-center justify-center h-screen overflow-hidden bg-gradient-to-br from-main-brand-primary ">
+      <div className="flex flex-col gap-medium bg-main-white p-xlarge rounded-medium shadow-2xl w-full max-w-lg border-1 border-primary">
         <Title variant="h2" className="text-center">
           Login CRM
         </Title>

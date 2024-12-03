@@ -56,9 +56,7 @@ const ManagePage = () => {
                 )}
             </div>
             <Divider />
-            <Title variant="h2" className="text-action-warning">
-                {t('manager.access-management-page')}
-            </Title>
+
 
             <div className="flex flex-col gap-medium">
                 <SegmentedControl
@@ -94,7 +92,6 @@ const ManagePage = () => {
                     </PermissionTable>
                 )}
                 {access === 'roleAccess' && <RolesTable />}
-                {/* {access === 'userAccess' && <UserAccess />} */}
             </div>
 
             <AddPermissionDrawer open={openAddNewKey} setOpen={setOpenAddNewKey} pageName={pageName} />

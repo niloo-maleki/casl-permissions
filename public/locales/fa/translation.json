@@ -12,23 +12,30 @@
     "centerType": "نوع مرکز",
     "serviceCenter": "مرکز ارایه سرویس",
     "serviceType": "نوع سرویس",
-    "searchCode": "کد اشتراک شناسه",
+    "subscription-code": "کد اشتراک ",
     "status": "وضعیت مشترک",
     "search": "جستجو",
+    "filter": "فیلتر",
     "advancedSearch": "جستجوی پیشرفته",
     "registerCall": "ثبت تماس",
-    "editChanges": "تغییرات"
+    "editChanges": "تغییرات",
+    "customer-name": "نام مشترک",
+    "email": "ایمیل",
+    "phoneNumber": "شماره تلفن",
+    "national-code": "کد ملی",
+    "postal-code": "کد پستی",
+    "customer-id": "شناسه"
   },
   "manager": {
-    "management":"مدیریت",
+    "management": "مدیریت",
     "select-role": "انتخاب نقش",
     "select-user": "انتخاب کاربر",
     "search-page": "جستجو صفحه",
     "Search-by-access-name": "جستجو بر اساس نام دسترسی",
     "save": "ذخیره",
-    "access-management-page":"دسترسی به صفحه مدیریت",
-    "page-accessible" : "آیا دسترسی صفحه جدید است؟",
-    "role-accessible" : "آیا دسترسی نقش جدید است؟"
+    "access-management-page": "دسترسی به صفحه مدیریت",
+    "page-accessible": "آیا دسترسی صفحه جدید است؟",
+    "role-accessible": "آیا دسترسی نقش جدید است؟"
   },
   "translations": {
     "title": "ترجمه ها",

@@ -178,7 +178,7 @@ export const rowDatas: RowData[] = [
             { value: '09123456789', icon: <IconPhoneFill className='fill-main-white stroke-2 stroke-main-brand-primary' /> },
             { value: '0 ریال' },
         ],
-        serviceType: 'تلفن ثابت',
+        serviceType: ['تلفن ثابت'],
         financialStatus: '-154,420,000',
         action: () => (
             <ActionButton />
@@ -210,7 +210,7 @@ export const rowDatas: RowData[] = [
     },
 
     {
-        user: 'محمدرضا شیرزاد',
+        user: [{ value: 'محمدرضا شیرزاد' }],
         phoneNumber: [
             { value: '2191322427', icon: <IconPhoneFill className='fill-main-white stroke-2 stroke-main-brand-primary' /> },
         ],

@@ -1,8 +1,9 @@
 import { Button, Modal } from '@shatel/ui-kit'
 import PermissionTable from './PermissionTable'
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { IResourceAccess } from '@src/api/interface';
-import { postModifyRoleResources } from '@src/api/endpoints/permissionsApi';
+import { getPermission, postModifyRoleResources } from '@src/api/endpoints/permissionsApi';
+import { AuthContext } from '@src/context/AuthContext';
 
 interface IRoleActionsModal {
     roleName: string,
@@ -15,6 +16,7 @@ interface IRoleActionsModal {
 const RoleActionsModal = (props: IRoleActionsModal) => {
     const { roleName, resourceAccess, setSelectedAccesses, open, setOpenModal } = props
     const [newSelectedAccesses, setNewSelectedAccesses] = useState<IResourceAccess[]>([]);
+    const { role, setPermissions, permissions } = useContext(AuthContext);
 
     const handleCheckboxChange = (item: IResourceAccess, isChecked: boolean) => {
         setSelectedAccesses((prevSelected) =>
@@ -25,12 +27,34 @@ const RoleActionsModal = (props: IRoleActionsModal) => {
 
         setNewSelectedAccesses([...newSelectedAccesses, item])
     };
+    useEffect(() => {
+        console.log('permissions', permissions)
+    }, [])
+
+
+    const updateNewPermissionForUser = async () => {
+        if (newSelectedAccesses?.length > 0 && role) {
+            console.log('newSelectedAccesses', newSelectedAccesses);
+            try {
+                const { data } = await getPermission(role);
+                if (data) {
+                    setPermissions(data.permissions);
+                }
+            } catch (error) {
+                console.error('Error fetching permissions:', error);
+            }
+        } else {
+            console.log('No new accesses selected or role is missing.');
+        }
+    };
 
     const submitChanges = async () => {
         await postModifyRoleResources({
             resourceAccess: newSelectedAccesses,
             roleName: roleName
         });
+
+        updateNewPermissionForUser()
         setNewSelectedAccesses([])
         setOpenModal(false)
     };

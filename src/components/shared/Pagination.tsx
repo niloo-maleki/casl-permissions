@@ -46,7 +46,7 @@ const Pagination = (props: PaginationProps) => {
             {previousLabel ? previousLabel : <IconExpandRightLight
                 onClick={() => handlePageClick(currentPage - 1)}
                 className={cn("fill-main-white stroke-main-primary stroke-2 cursor-pointer",
-                    currentPage === 0 && 'stroke-inactive-text'
+                    currentPage === 1 && 'stroke-inactive-text'
                 )} />}
 
 
